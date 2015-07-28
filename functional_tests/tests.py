@@ -80,7 +80,7 @@ class NewVisitorTest(LiveServerTestCase):
         # Edit wonders whether the site will remember he list. The she sees
         # that the site has generated a unique URL for her -- there is some
         # explanatory text to that effect.
-        self.fail('Finish the test!')
+        self.fail('Finish the test!!')
 
         # She visits that URL - her to-do list is still there.
 
