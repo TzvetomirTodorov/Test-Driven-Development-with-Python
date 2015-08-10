@@ -41,11 +41,11 @@ class NewVisitorTest(LiveServerTestCase):
         inputbox.send_keys('Buy peacock feathers')
 
         # When she hits enter, she is take to a new URL,
-        # and now the pagel ists "1: Buy peacock feathers" as an item in a a
+        # and now the page lists "1: Buy peacock feathers" as an item in a a
         # to-do list table
         inputbox.send_keys(Keys.ENTER)
-        edit_list_url = self.browser.current_url
-        self.assertRegex(edit_list_url), '/lists/.+')
+        edith_list_url = self.browser.current_url
+        self.assertRegex(edith_list_url, '/lists/.+')
         self.check_for_row_in_list_table('1: Buy peacock feathers')
 
         # table = self.browser.find_element_by_id('id_list_table')
@@ -105,7 +105,7 @@ class NewVisitorTest(LiveServerTestCase):
         inputbox.send_keys(Keys.ENTER)
 
         # Francis gets his own unique URL
-        francis_list_url = self.brwoser.current_url
+        francis_list_url = self.browser.current_url
         self.assertRegex(francis_list_url, '/lists/.+')
         self.assertNotEqual(francis_list_url, edith_list_url)
 

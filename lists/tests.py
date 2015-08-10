@@ -9,26 +9,6 @@ from lists.models import Item
 
 # Create your tests here.
 
-class ItemModelTest(TestCase):
-
-    def test_saving_and_retrieving_items(self):
-        first_item = Item()
-        first_item.text = 'The first (ever) list item'
-        first_item.save()
-
-        second_item = Item()
-        second_item.text = 'Item the second'
-        second_item.save()
-
-        saved_items = Item.objects.all()
-        self.assertEqual(saved_items.count(), 2)
-
-        first_saved_item = saved_items[0]
-        second_saved_item = saved_items[1]
-        self.assertEqual(first_saved_item.text, 'The first (ever) list item')
-        self.assertEqual(second_saved_item.text, 'Item the second')
-
-
 class HomePageTest(TestCase):
 
     def test_root_url_resolves_to_home_page_view(self):
@@ -67,7 +47,7 @@ class HomePageTest(TestCase):
         response = home_page(request)
 
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response['location'], '/')
+        self.assertEqual(response['location'], '/lists/the-only-list-in-the-world/')
 
         # self.assertIn('A new list item', response.content.decode())
         # expected_html = render_to_string(
@@ -81,12 +61,48 @@ class HomePageTest(TestCase):
         home_page(request)
         self.assertEqual(Item.objects.count(), 0)
 
-    def test_home_page_displays_all_list_items(self):
+    # <-- No longer needed as this was refactored in to the ListViewTest | test_displays_all_items class | method-->
+    # def test_home_page_displays_all_list_items(self):
+    #     Item.objects.create(text='itemey 1')
+    #     Item.objects.create(text='itemey 2')
+
+    #     request = HttpRequest()
+    #     response = home_page(request)
+
+    #     self.assertIn('itemey 1', response.content.decode())
+    #     self.assertIn('itemey 2', response.content.decode())
+
+class ListViewTest(TestCase):
+
+    def test_uses_list_template(self):
+        response = self.client.get('/lists/the-only-list-in-the-world/')
+        self.assertTemplateUsed(response, 'list.html')
+
+    def test_displays_all_items(self):
         Item.objects.create(text='itemey 1')
         Item.objects.create(text='itemey 2')
 
-        request = HttpRequest()
-        response = home_page(request)
+        response = self.client.get('/lists/the-only-list-in-the-world/')
 
-        self.assertIn('itemey 1', response.content.decode())
-        self.assertIn('itemey 2', response.content.decode())
+        self.assertContains(response, 'itemey 1')
+        self.assertContains(response, 'itemey 2')
+
+class ItemModelTest(TestCase):
+
+    def test_saving_and_retrieving_items(self):
+        first_item = Item()
+        first_item.text = 'The first (ever) list item'
+        first_item.save()
+
+        second_item = Item()
+        second_item.text = 'Item the second'
+        second_item.save()
+
+        saved_items = Item.objects.all()
+        self.assertEqual(saved_items.count(), 2)
+
+        first_saved_item = saved_items[0]
+        second_saved_item = saved_items[1]
+        self.assertEqual(first_saved_item.text, 'The first (ever) list item')
+        self.assertEqual(second_saved_item.text, 'Item the second')
+

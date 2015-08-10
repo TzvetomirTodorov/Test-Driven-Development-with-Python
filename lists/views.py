@@ -2,15 +2,7 @@ from django.shortcuts import redirect, render
 # No longer needed as we are now using the django render and not HttpResponse
 from django.http import HttpResponse
 from lists.models import Item
-                                                                         # s
-                                                                         # NOTE:
-                                                                         # Chapter
-                                                                         # 5
-                                                                         # calls
-                                                                         # for
-                                                                         # import
-                                                                         # HttpResponse
-                                                                         # again
+# NOTE: Chapter 5 calls for import HttpResponse again
 
 # Create your views here.
 
@@ -18,10 +10,12 @@ from lists.models import Item
 def home_page(request):
     if request.method == 'POST':
         Item.objects.create(text=request.POST['item_text'])
-        return redirect('/')
+        return redirect('/lists/the-only-list-in-the-world/')
+    
+    return render(request, 'home.html')
 
-    items = Item.objects.all()
-    return render(request, 'home.html', {'items': items})
+    # items = Item.objects.all()
+    # return render(request, 'home.html', {'items': items})
 
     # if request.method == 'POST':
     # 	new_item_text = request.POST['item_text']
@@ -51,3 +45,7 @@ def home_page(request):
         # return HttpResponse(request.POST['item_text'])
     # return HttpResponse('<html><title>To-Do lists</title></html>') --> Instead of building our own HttpResponse,
     # 																     we now use the Django render function.
+
+def view_list(request):
+    items = Item.objects.all()
+    return render(request, 'list.html', {'items': items})
