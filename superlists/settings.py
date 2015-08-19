@@ -23,9 +23,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'gibmd#ai@ocd%%y7y7(gvra(0+f)sx^26ywqa)pqlqrn*jzkz='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+TEMPLATE_DEBUG = DEBUG
+
+ALLOWED_HOSTS = ['ec2-54-191-116-103.us-west-2.compute.amazonaws.com', '54.191.116.103']
 
 
 # Application definition
