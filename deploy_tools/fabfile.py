@@ -1,26 +1,36 @@
+from fabric.context_managers import cd
+from fabric.operations import sudo
 from fabric.contrib.files import append, exists, sed
 from fabric.api import env, local, run
 from fabric.network import ssh
+
+import os
 
 import random
 
 
 REPO_URL = 'https://github.com/TzvetomirTodorov/Test-Driven-Development-with-Python'
 
+HOME = os.getenv('HOME')
+
+env.user = 'ubuntu'
+env.hosts = ['ec2-54-148-178-63.us-west-2.compute.amazonaws.com','54.148.178.63',]
+env.key_filename = ['%s/.ssh/TzvettyAWSEC2Ubuntu1404PV.pem' % HOME]
 
 def deploy():
-    site_folder = '/home/%s/sites/%s' % (env.user, env.host)  
-    source_folder = site_folder + '/source'
+    _host = 'lists'
+    site_folder = '/home/%s/srv/webapps/%s' % (env.user, _host)  
+    source_folder = site_folder + '/Test-Driven-Development-with-Python'
     _create_directory_structure_if_necessary(site_folder)
     _get_latest_source(source_folder)
-    _update_settings(source_folder, env.host)
+    _update_settings(source_folder, _host)
     _update_virtualenv(source_folder)
     _update_static_files(source_folder)
     _update_database(source_folder)
 
 
 def _create_directory_structure_if_necessary(site_folder):
-    for subfolder in ('database', 'static', 'virtualenv', 'source'):
+    for subfolder in ('database', 'static', 'virtualenv', 'Test-Driven-Development-with-Python'):
         run('mkdir -p %s/%s' % (site_folder, subfolder))
 
 
@@ -49,7 +59,7 @@ def _update_settings(source_folder, site_name):
 
 
 def _update_virtualenv(source_folder):
-    virtualenv_folder = source_folder + '/../virtualenv'
+    virtualenv_folder = source_folder + '/../bin/virtualenv'
     if not exists(virtualenv_folder + '/bin/pip'):
         run('virtualenv --python=python3 %s' % (virtualenv_folder,))
     run('%s/bin/pip install -r %s/requirements.txt' % (
@@ -58,11 +68,11 @@ def _update_virtualenv(source_folder):
 
 
 def _update_static_files(source_folder):
-    run('cd %s && ../virtualenv/bin/python3 manage.py collectstatic --noinput' % (
+    run('cd %s && ../bin/virtualenv/bin/python3 manage.py collectstatic --noinput' % (
         source_folder,
     ))
 
 def _update_database(source_folder):
-    run('cd %s && ../virtualenv/bin/python3 manage.py migrate --noinput' % (
+    run('cd %s && ../bin/virtualenv/bin/python3 manage.py migrate --noinput' % (
         source_folder,
     ))
