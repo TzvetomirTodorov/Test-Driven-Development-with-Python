@@ -11,7 +11,7 @@ import random
 
 REPO_URL = 'https://github.com/TzvetomirTodorov/Test-Driven-Development-with-Python'
 
-HOME = os.getenv('HOME')
+HOME = os.getenv('HOME') 
 
 env.user = 'ubuntu'
 env.hosts = ['ec2-54-148-178-63.us-west-2.compute.amazonaws.com','54.148.178.63',]
