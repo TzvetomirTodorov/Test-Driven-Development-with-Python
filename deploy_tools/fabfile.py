@@ -14,7 +14,7 @@ REPO_URL = 'https://github.com/TzvetomirTodorov/Test-Driven-Development-with-Pyt
 HOME = os.getenv('HOME') 
 
 env.user = 'ubuntu'
-env.hosts = ['ec2-54-148-178-63.us-west-2.compute.amazonaws.com','54.148.178.63',]
+env.hosts = ['ec2-52-10-18-77.us-west-2.compute.amazonaws.com','52.10.18.77',]
 env.key_filename = ['%s/.ssh/TzvettyAWSEC2Ubuntu1404PV.pem' % HOME]
 
 def deploy():
@@ -30,7 +30,7 @@ def deploy():
 
 
 def _create_directory_structure_if_necessary(site_folder):
-    for subfolder in ('database', 'static', 'virtualenv', 'Test-Driven-Development-with-Python'):
+    for subfolder in ('database', 'static', 'Test-Driven-Development-with-Python'):
         run('sudo mkdir -p %s/%s' % (site_folder, subfolder))
 
 
@@ -38,7 +38,7 @@ def _get_latest_source(source_folder):
     if exists(source_folder + '/.git'):
         run('cd %s && sudo git fetch' % (source_folder,))  
     else:
-        run('sudo git clone %s %s' % (REPO_URL, source_folder))
+        run('sudo git clone %s %s' % (REPO_URL,  site_folder))
     current_commit = local("git log -n 1 --format=%H", capture=True)
     run('cd %s && sudo git reset --hard %s' % (source_folder, current_commit))
 
@@ -59,20 +59,20 @@ def _update_settings(source_folder, site_name):
 
 
 def _update_virtualenv(source_folder):
-    virtualenv_folder = source_folder + '../bin/virtualenv'
-    if not exists(virtualenv_folder + '/bin/pip'):
+    virtualenv_folder = source_folder + '../bin'
+    if not exists(virtualenv_folder + '/pip'): #1
         run('virtualenv --python=python3 %s' % (virtualenv_folder,))
-    run('%s/bin/pip install -r %s/requirements.txt' % (
+    run('%s/bin/pip install -r %s/requirements.txt' % ( #2
             virtualenv_folder, source_folder
     ))
 
 
 def _update_static_files(source_folder):
-    run('cd %s && python3 manage.py collectstatic --noinput' % (
+    run('cd %s && python manage.py collectstatic --noinput' % (
         source_folder,
     ))
 
 def _update_database(source_folder):
-    run('cd %s && python3 manage.py migrate --noinput' % (
+    run('cd %s && python manage.py migrate --noinput' % (
         source_folder,
     ))
