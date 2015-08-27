@@ -27,7 +27,7 @@ class ItemValidationTest(FunctionalTest):
 
         # She receives a similar warning on the list page
         self.check_for_row_in_list_table('1: Buy milk')
-        error = get_error_element()
+        error = self.get_error_element()
         self.assertEqual(error.text, "You can't have an empty list item")
 
         # And she can correct it by filling some text in
