@@ -31,16 +31,16 @@ def deploy():
 
 def _create_directory_structure_if_necessary(site_folder):
     for subfolder in ('database', 'static', 'virtualenv', 'Test-Driven-Development-with-Python'):
-        run('mkdir -p %s/%s' % (site_folder, subfolder))
+        run('sudo mkdir -p %s/%s' % (site_folder, subfolder))
 
 
 def _get_latest_source(source_folder):
     if exists(source_folder + '/.git'):
-        run('cd %s && git fetch' % (source_folder,))  
+        run('cd %s && sudo git fetch' % (source_folder,))  
     else:
-        run('git clone %s %s' % (REPO_URL, source_folder))
+        run('sudo git clone %s %s' % (REPO_URL, source_folder))
     current_commit = local("git log -n 1 --format=%H", capture=True)
-    run('cd %s && git reset --hard %s' % (source_folder, current_commit))
+    run('cd %s && sudo git reset --hard %s' % (source_folder, current_commit))
 
 
 def _update_settings(source_folder, site_name):
@@ -68,11 +68,11 @@ def _update_virtualenv(source_folder):
 
 
 def _update_static_files(source_folder):
-    run('cd %s && ../bin/python3 manage.py collectstatic --noinput' % (
+    run('cd %s && python3 manage.py collectstatic --noinput' % (
         source_folder,
     ))
 
 def _update_database(source_folder):
-    run('cd %s && ../bin/python3 manage.py migrate --noinput' % (
+    run('cd %s && python3 manage.py migrate --noinput' % (
         source_folder,
     ))
