@@ -24,7 +24,7 @@ def deploy():
     _create_directory_structure_if_necessary(site_folder)
     _get_latest_source(source_folder)
     _update_settings(source_folder, _host)
-    _update_virtualenv(source_folder)
+    # _update_virtualenv(source_folder)
     _update_static_files(source_folder)
     _update_database(source_folder)
 
@@ -58,13 +58,13 @@ def _update_settings(source_folder, site_name):
     append(settings_path, '\nfrom .secret_key import SECRET_KEY')
 
 
-def _update_virtualenv(source_folder):
-    virtualenv_folder = source_folder + '../bin'
-    if not exists(virtualenv_folder + '/pip'): #1
-        run('virtualenv --python=python3 %s' % (virtualenv_folder,))
-    run('%s/bin/pip install -r %s/requirements.txt' % ( #2
-            virtualenv_folder, source_folder
-    ))
+# def _update_virtualenv(source_folder):
+#     virtualenv_folder = source_folder + '../bin'
+#     if not exists(virtualenv_folder + '/pip'): #1
+#         run('virtualenv --python=python3 %s' % (virtualenv_folder,))
+#     run('%s/bin/pip install -r %s/requirements.txt' % ( #2
+#             virtualenv_folder, source_folder
+#     ))
 
 
 def _update_static_files(source_folder):
