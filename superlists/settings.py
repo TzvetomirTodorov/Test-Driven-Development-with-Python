@@ -32,6 +32,23 @@ ALLOWED_HOSTS = ['ec2-52-10-18-77.us-west-2.compute.amazonaws.com', '52.10.18.77
 
 # Application definition
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+        },
+    },
+    'root': {'level': 'INFO'},
+}
+
 INSTALLED_APPS = (
     #'django.contrib.admin',
     'django.contrib.auth',
@@ -104,3 +121,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, '../static'))
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'superlists', 'static'),
+)
