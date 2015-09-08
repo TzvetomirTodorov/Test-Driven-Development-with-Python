@@ -2,6 +2,9 @@ var initialize = function (navigator, user, token, urls) {
     $('#id_login').on('click', function () {
         navigator.id.request();
     });
+    $('#id_logout').on('click', function() {
+        navigator.id.logout();
+    });
 
     navigator.id.watch({
         loggedInUser: user,
@@ -13,7 +16,14 @@ var initialize = function (navigator, user, token, urls) {
                 deferred.done(function () { window.location.reload(); })
                 deferred.fail(function () { navigator.id.logout(); });
         },
-        onlogout: function () {}
+        onlogout: function () {
+            var deferred = $.post(
+                urls.logout,
+                { csrfmiddlewaretoken: token }
+            )
+                deferred.done(function () { window.location.reload(); })
+                deferred.fail(function () { navigator.id.logout(); });
+        }
     });
 };
 
