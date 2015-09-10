@@ -59,7 +59,7 @@ def _update_settings(source_folder, site_name):
 
 
 def _update_virtualenv(source_folder):
-    virtualenv_folder = source_folder + '/../bin'
+    virtualenv_folder = source_folder + 'cd ../bin/ && . activate'
     if not exists(virtualenv_folder + '/pip'): #1
         run('virtualenv --python=python3.4 %s' % (virtualenv_folder,))
     run('%s/bin/pip install -r %s/requirements.txt' % ( #2
