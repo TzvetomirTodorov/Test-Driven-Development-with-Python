@@ -16,9 +16,9 @@ HOME = os.getenv('HOME')
 env.user = 'ubuntu'
 env.hosts = ['ec2-52-10-18-77.us-west-2.compute.amazonaws.com','52.10.18.77',]
 env.key_filename = ['%s/.ssh/TzvettyAWSEC2Ubuntu1404PV.pem' % HOME]
+_host = 'lists'
 
-def deploy():
-    _host = 'lists'
+def deploy():    
     site_folder = '/home/%s/srv/webapps/%s' % (env.user, _host)  
     source_folder = site_folder + '/Test-Driven-Development-with-Python'
     _create_directory_structure_if_necessary(site_folder)
@@ -59,20 +59,20 @@ def _update_settings(source_folder, site_name):
 
 
 def _update_virtualenv(source_folder):
-    virtualenv_folder = source_folder + 'cd ../bin/ && . activate'
-    if not exists(virtualenv_folder + '/pip'): #1
+    virtualenv_folder = source_folder + '/../bin'
+    if not exists(virtualenv_folder + '/pip'):
         run('virtualenv --python=python3.4 %s' % (virtualenv_folder,))
-    run('%s/bin/pip install -r %s/requirements.txt' % ( #2
+    run('%s/bin/pip install -r %s/requirements.txt' % (
             virtualenv_folder, source_folder
     ))
 
 
 def _update_static_files(source_folder):
-    run('cd %s && python manage.py collectstatic --noinput' % (
+    run('cd %s && ../bin/python3 manage.py collectstatic --noinput' % (
         source_folder,
     ))
 
 def _update_database(source_folder):
-    run('cd %s && python manage.py migrate --noinput' % (
+    run('cd %s && ../bin/python3 manage.py migrate --noinput' % (
         source_folder,
     ))
