@@ -14,7 +14,7 @@ REPO_URL = 'https://github.com/TzvetomirTodorov/Test-Driven-Development-with-Pyt
 HOME = os.getenv('HOME') 
 
 env.user = 'ubuntu'
-env.hosts = ['ec2-52-10-18-77.us-west-2.compute.amazonaws.com','52.10.18.77',]
+env.hosts = ['52.10.18.77',]
 env.key_filename = ['%s/.ssh/TzvettyAWSEC2Ubuntu1404PV.pem' % HOME]
 _host = 'lists'
 
