@@ -43,8 +43,8 @@ def _get_latest_source(source_folder):
     run('cd %s && sudo git reset --hard %s' % (source_folder, current_commit))
 
 
-def _update_settings(source_folder):
-    site_name = "52.10.18.77"
+def _update_settings(source_folder, _site_name):
+    _site_name = "52.10.18.77"
     settings_path = source_folder + '/superlists/settings.py'
     sed(settings_path, "DEBUG = True", "DEBUG = False")
     sed(settings_path, 'DOMAIN = "localhost"', 'DOMAIN = "%s"' % (site_name,))
