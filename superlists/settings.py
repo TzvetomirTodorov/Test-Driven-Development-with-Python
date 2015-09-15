@@ -29,7 +29,7 @@ TEMPLATE_DEBUG = DEBUG
 
 DOMAIN = "localhost"
 
-ALLOWED_HOSTS = [DOMAIN, "52.10.18.77"]
+ALLOWED_HOSTS = [DOMAIN]
 
 
 # Application definition

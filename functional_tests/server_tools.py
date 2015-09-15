@@ -10,12 +10,12 @@ def create_session_on_server(host, email):
             '--host={}'.format(host),
             '--hide=everything,status',
         ],
-        cwd = THIS_FOLDER
+        cwd=THIS_FOLDER
     ).decode().strip()
 
 
 def reset_database(host):
     subprocess.check_call(
         ['fab', 'reset_database', '--host={}'.format(host)],
-        cwd = THIS_FOLDER
+        cwd=THIS_FOLDER
     )

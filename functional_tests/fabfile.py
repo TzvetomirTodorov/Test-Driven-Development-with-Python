@@ -1,5 +1,6 @@
 from fabric.api import env, run
 
+host = lists
 
 def _get_base_folder(host):
     return '~/srv/webapps/' + host
