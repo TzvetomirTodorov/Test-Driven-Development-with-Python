@@ -27,7 +27,9 @@ DEBUG = True
 
 TEMPLATE_DEBUG = DEBUG
 
-ALLOWED_HOSTS = ['ec2-52-10-18-77.us-west-2.compute.amazonaws.com', '52.10.18.77',]
+DOMAIN = 'localhost'
+
+ALLOWED_HOSTS = [DOMAIN, 'ec2-52-10-18-77.us-west-2.compute.amazonaws.com', '52.10.18.77']
 
 
 # Application definition
@@ -58,6 +60,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'lists',
     'accounts',
+    'functional_tests',
 )
 
 MIDDLEWARE_CLASSES = (
