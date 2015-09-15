@@ -27,9 +27,9 @@ DEBUG = True
 
 TEMPLATE_DEBUG = DEBUG
 
-DOMAIN = 'localhost'
+DOMAIN = "localhost"
 
-ALLOWED_HOSTS = [DOMAIN, 'ec2-52-10-18-77.us-west-2.compute.amazonaws.com', '52.10.18.77']
+ALLOWED_HOSTS = [DOMAIN] #'ec2-52-10-18-77.us-west-2.compute.amazonaws.com', '52.10.18.77' 
 
 
 # Application definition
