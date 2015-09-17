@@ -1,13 +1,13 @@
 from fabric.api import env, run
 
-host = lists
+_host = 'lists'
 
 def _get_base_folder(host):
-    return '~/srv/webapps/' + host
+    return '~/srv/webapps/' + _host
 
 def _get_manage_dot_py(host):
     return '{path}/bin/python {path}/source/manage.py'.format(
-        path=_get_base_folder(host)
+        path=_get_base_folder(_host)
     )
 
 
